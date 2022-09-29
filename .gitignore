@@ -1,0 +1,10 @@
+env/
+obp_python/config.py
+obp_python/config_local.py
+obp_python/__pycache__/
+__pycache__/
+.idea/
+venv/
+notebooks/
+resources/
+upload_data_set_to_sandbox_debug.py
