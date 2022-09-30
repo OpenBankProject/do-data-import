@@ -20,6 +20,9 @@ We need to copy the spreadsheet template and then add your own data. Please do n
 2) import your data set into the spreadsheet resources/sb_import.xlsx_
 
 ### Use the script
+
+We need to import the data and check it loaded ok. We can also remove the data.
+
 1) To import data:
  run upload_data_set_to_sandbox.py
    
@@ -32,6 +35,12 @@ Note: sb data set productos are account attributes within obp accounts
 
    
 ## Endpoints for retrieving the data
+
+There are multiple endpoints you can use to inspect and update the data. Here we list a basic set. 
+
+You need to be authenticated and authorised before you can call most of the endpoints.
+
+The simplest way to authenticate is via Direct Login. You can also try the endpoints in API Explorer. API Explorer will tell you if you need a Role and you can request it on API Explorer by clicking a button there. Please contact support in case you need a Role.
 
 ### Get Direct Login Token
 ```
@@ -53,7 +62,7 @@ curl --location --request POST 'localhost:8080/obp/v4.0.0/banks/ADOPEM/customers
 --header 'Content-Type: application/json' \
 --data-raw '{  "customer_number":"4578102"}'
 ```
-[documentation](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv3_1_0-getCustomerByCustomerNumber&currentTag=Customer#OBPv3_1_0-getCustomerByCustomerNumber)
+[API Explorer documentation](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv3_1_0-getCustomerByCustomerNumber&currentTag=Customer#OBPv3_1_0-getCustomerByCustomerNumber)
 ### Get Account by AccountRouting
 ```
 curl --location --request POST 'localhost:8080/obp/v5.0.0/management/accounts/account-routing-query' \
@@ -67,7 +76,7 @@ curl --location --request POST 'localhost:8080/obp/v5.0.0/management/accounts/ac
     }
 }'
 ```
-[documentation](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv4_0_0-getAccountByAccountRouting&currentTag=Account#OBPv4_0_0-getAccountByAccountRouting)
+[API Explorer documentation](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv4_0_0-getAccountByAccountRouting&currentTag=Account#OBPv4_0_0-getAccountByAccountRouting)
 ### Get Branches for a Bank
 
 ```
