@@ -1,10 +1,21 @@
-## Usage
+## Usage Guide
+
+This document explains how to load the Dominican Republic SB Data Dictionary into the IFC OBP Sandbox and query it.
+
+Python Scripts are provided which read the spreadsheets and call the OBP APIs.
+
 
 ### Configure the script
+
+We need to copy the script config and modify it - and add our username / password and consumer key.
+
 1) cp ./obp_python/example_config.py to ./obp_python/config.py 
 2) add your [username / password](https://ifcsandbox.openbankproject.com/user_mgt/sign_up) and [consumer key](https://ifcsandbox.openbankproject.com/consumer-registration) 
 
 ### Copy your data set to  the data  sheet
+
+We need to copy the spreadsheet template and then add your own data. Please do not change the structure of the spreadsheet in any way.
+
 1) cp resources/sb_import_template.xlsx to resources/sb_import.xlsx
 2) import your data set into the spreadsheet resources/sb_import.xlsx_
 
