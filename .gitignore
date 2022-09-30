@@ -1,6 +1,7 @@
 env/
 obp_python/config.py
 obp_python/config_local.py
+obp_python/config_sandbox.py
 obp_python/__pycache__/
 __pycache__/
 .idea/

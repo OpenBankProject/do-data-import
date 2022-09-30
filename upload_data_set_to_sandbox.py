@@ -33,6 +33,8 @@ for row in banks.iter_rows(min_row=2, max_col=banks.max_column, max_row=banks.ma
 	create_bank_entitlements_for_user(bank_id)
 	create_bank_attribute_from_row(row)
 	create_authority_data_request_instance_at_bank(bank_id)
+	# again for the dynamic entity
+	create_bank_entitlements_for_user(bank_id)
 
 
 for row in customers.iter_rows(min_row=2, max_col=customers.max_column, max_row=customers.max_row):
