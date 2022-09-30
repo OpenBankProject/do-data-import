@@ -14,6 +14,6 @@ def createGlobalAuthorityDataRequest(
         "mandate_name": mandate_name,
         "mandate_name_year": mandate_name_year
     }
-    url = obp_api_host + '/obp/dynamic-entity/banks/{BANK_ID}/authority_data_request'.format(BANK_ID=bank_id)
+    url = obp_api_host + '/obp/dynamic-entity/authority_data_request'
 
     return makePostRequest(url, payload)
