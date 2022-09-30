@@ -93,9 +93,9 @@ curl --location --request GET 'localhost:8080/obp/dynamic-entity/banks/POPULAR/a
 --header 'Content-Type: application/json'
 ```
 
-### Another yet undisclosed Summary Endpoint
+### Get Customer Overview
 
-Will give ALL information by Customer Number.
+Get all relavent information to a customer by Customer Number.
 
 
 ### Get Banks
