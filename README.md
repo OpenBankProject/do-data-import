@@ -43,16 +43,19 @@ You need to be authenticated and authorised before you can call most of the endp
 The simplest way to authenticate is via Direct Login. You can also try the endpoints in API Explorer. API Explorer will tell you if you need a Role and you can request it on API Explorer by clicking a button there. Please contact support in case you need a Role.
 
 ### Get Direct Login Token
+
+For development purposes, you could use an easy access authentication, called direct login:
+Register your username and password [here]()
 ```
-curl --location --request POST 'localhost:8080/my/logins/direct' \
---header 'Authorization: DirectLogin username="tobwoln8",password="password",consumer_key=zn52gyqmefztfiuylwup25timhaezqi0y3ej301n' \
+curl --location --request POST 'https://ifcsandbox.openbankproject.com/my/logins/direct' \
+--header 'Authorization: DirectLogin username="YOURUSERNAME",password="password",consumer_key="YOUR_CONSUMER_KEY"' \
 --header 'Content-Type: application/json' 
 ```
 
 ### Get Bank
 
 ```
-curl --location --request GET 'localhost:8080/obp/v3.1.0/banks/ADOPEM'
+curl --location --request GET 'https://ifcsandbox.openbankproject.com/obp/v5.0.0/banks/ADOPEM'
 ```
 
 ### Get Customer by CustomerNumber
@@ -88,9 +91,9 @@ curl --location --request GET 'localhost:8080/obp/v3.0.0/banks/ADOPEM/branches' 
 ### Get Authority Data Requests
 
 ```
-curl --location --request GET 'localhost:8080/obp/dynamic-entity/banks/POPULAR/authority_data_request' \
---header 'Authorization: DirectLogin token=eyJhbGciOiJIUzI1NiJ9.eyIiOiIifQ.qkTKhbS-RmJO8qeFC3b_A83Od979KT3UQ3h7xv6gp_o' \
---header 'Content-Type: application/json'
+curl --location --request GET 'https://ifcsandbox.openbankproject.com/obp/dynamic-entity/authority_data_request?bank_code=POPULAR' \
+--header 'Authorization: DirectLogin token=$YOUR_DIRECT_LOGIN_TOKEN' \
+--header 'Content-Type: application/json' 
 ```
 
 ### Get Customer Overview
