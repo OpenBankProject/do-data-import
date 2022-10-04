@@ -98,7 +98,7 @@ curl --location --request GET 'https://ifcsandbox.openbankproject.com/obp/dynami
 
 ### Get Customer Overview
 
-Get all relavent information to a customer by Customer Number.
+Use the endpoint [Get Customer Overview](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv5_0_0-getCustomerOverview&currentTag=Customer#OBPv5_0_0-getCustomerOverview) to get all relavent information of a customer by their Customer Number.
 
 
 ### Get Banks
