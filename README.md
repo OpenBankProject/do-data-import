@@ -45,32 +45,61 @@ The simplest way to authenticate is via Direct Login. You can also try the endpo
 ### Get Direct Login Token
 
 For development purposes, you could use an easy access authentication, called direct login:
-Register your username and password [here]()
+Register your username and password [here](https://ifcsandbox.openbankproject.com/user_mgt/sign_up)
+Get your consumer key [here](https://ifcsandbox.openbankproject.com/consumer-registration)
+
+Example (replace $YOUR_CONSUMER_KEY with your consumer key, not consumer secret):
 ```
 curl --location --request POST 'https://ifcsandbox.openbankproject.com/my/logins/direct' \
---header 'Authorization: DirectLogin username="YOURUSERNAME",password="password",consumer_key="YOUR_CONSUMER_KEY"' \
+--header 'Authorization: DirectLogin username="YOURUSERNAME",password="password",consumer_key=$YOUR_CONSUMER_KEY' \
 --header 'Content-Type: application/json' 
 ```
+Replace $YOUR_DIRECT_LOGIN_TOKEN in the Examples below with the token you get!
 
 ### Get Bank
+Use Endpoint [Get Bank](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv5_0_0-getBank&currentTag=Bank#OBPv5_0_0-getBank)
 
+Example:
 ```
 curl --location --request GET 'https://ifcsandbox.openbankproject.com/obp/v5.0.0/banks/ADOPEM'
 ```
+### Get Customers
 
-### Get Customer by CustomerNumber
+Use Endpoint [Get Customers at Bank](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv5_0_0-getCustomersAtOneBank&currentTag=Customer#OBPv5_0_0-getCustomersAtOneBank)
+
+Example:
 ```
-curl --location --request POST 'localhost:8080/obp/v4.0.0/banks/ADOPEM/customers/customer-number' \
---header 'Authorization: DirectLogin token=eyJhbGciOiJIUzI1NiJ9.eyIiOiIifQ.qkTKhbS-RmJO8qeFC3b_A83Od979KT3UQ3h7xv6gp_o' \
+curl --location --request GET 'https://ifcsandbox.openbankproject.com//obp/v5.0.0/banks/ADOPEM/customers' \
+--header 'Authorization: DirectLogin token=$YOUR_DIRECT_LOGIN_TOKEN'
+```
+### Get Customer by CustomerNumber
+Use Endpoint [Get Customer by CustomerNumber](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv3_1_0-getCustomerByCustomerNumber&currentTag=Customer#OBPv3_1_0-getCustomerByCustomerNumber)
+
+Example:
+
+```
+curl --location --request POST 'https://ifcsandbox.openbankproject.com/obp/v4.0.0/banks/ADOPEM/customers/customer-number' \
+--header 'Authorization: DirectLogin token=$YOUR_DIRECT_LOGIN_TOKEN' \
 --header 'Content-Type: application/json' \
 --data-raw '{  "customer_number":"4578102"}'
 ```
-[API Explorer documentation](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv3_1_0-getCustomerByCustomerNumber&currentTag=Customer#OBPv3_1_0-getCustomerByCustomerNumber)
-### Get Account by AccountRouting
+### Get all accounts for one Bank
+Use Endpoint [Get Fast Firehose Accounts at Bank](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv4_0_0-getFastFirehoseAccountsAtOneBank&currentTag=Account#OBPv4_0_0-getFastFirehoseAccountsAtOneBank).
+Take a look at the documentation regarding the pagination
+
+Example:
 ```
-curl --location --request POST 'localhost:8080/obp/v5.0.0/management/accounts/account-routing-query' \
+curl --location --request GET 'https://ifcsandbox.openbankproject.com//obp/v5.0.0/management/banks/ADOPEM/fast-firehose/accounts?limit=100&offset=0' \
+--header 'Authorization: DirectLogin token=$YOUR_TOKEN' 
+```
+### Get Account by AccountRouting
+Use this Endpoint [Get Account by AccountRouting](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv4_0_0-getAccountByAccountRouting&currentTag=Account#OBPv4_0_0-getAccountByAccountRouting)
+
+Example
+```
+curl --location --request POST 'https://ifcsandbox.openbankproject.com/obp/v5.0.0/management/accounts/account-routing-query' \
 --header 'Content-Type: application/json' \
---header 'Authorization: DirectLogin token=eyJhbGciOiJIUzI1NiJ9.eyIiOiIifQ.qkTKhbS-RmJO8qeFC3b_A83Od979KT3UQ3h7xv6gp_o' \
+--header 'Authorization: DirectLogin token=$YOUR_DIRECT_LOGIN_TOKEN' \
 --data-raw '{
     "bank_id": "ADOPEM",
     "account_routing": {
@@ -79,17 +108,16 @@ curl --location --request POST 'localhost:8080/obp/v5.0.0/management/accounts/ac
     }
 }'
 ```
-[API Explorer documentation](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv4_0_0-getAccountByAccountRouting&currentTag=Account#OBPv4_0_0-getAccountByAccountRouting)
 ### Get Branches for a Bank
 
 ```
-curl --location --request GET 'localhost:8080/obp/v3.0.0/banks/ADOPEM/branches' \
---header 'Authorization: DirectLogin token=eyJhbGciOiJIUzI1NiJ9.eyIiOiIifQ.qkTKhbS-RmJO8qeFC3b_A83Od979KT3UQ3h7xv6gp_o' \
+curl --location --request GET 'https://ifcsandbox.openbankproject.com/obp/v3.0.0/banks/ADOPEM/branches' \
+--header 'Authorization: DirectLogin token=$YOUR_DIRECT_LOGIN_TOKEN' \
 --header 'Content-Type: application/json'
 ```
 
 ### Get Authority Data Requests
-
+Example:
 ```
 curl --location --request GET 'https://ifcsandbox.openbankproject.com/obp/dynamic-entity/authority_data_request?bank_code=POPULAR' \
 --header 'Authorization: DirectLogin token=$YOUR_DIRECT_LOGIN_TOKEN' \
@@ -99,7 +127,6 @@ curl --location --request GET 'https://ifcsandbox.openbankproject.com/obp/dynami
 ### Get Customer Overview
 
 Use the endpoint [Get Customer Overview](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv5_0_0-getCustomerOverview&currentTag=Customer#OBPv5_0_0-getCustomerOverview) to get all relavent information of a customer by their Customer Number.
-
 
 ### Get Banks
 Use Endpoint [Get Bank](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv4_0_0-getBank&currentTag=Bank#OBPv4_0_0-getBank)
@@ -118,29 +145,25 @@ Use Endpoint [Get Branches for a Bank](https://ifcsandbox-explorer.openbankproje
 ### Get Authority Data requests
 
 Use Endpoint [Get Authority Data Requests List](https://ifcsandbox-explorer.openbankproject.com/)
-## OBP  Data Integration internals
+## Endpoints for uploading the data
 
 
 
 If you are interested in the scripts underlying api endpoints, or even creating your own upload scripts, 
 follow the process below
 
-### If the bank does not exist, create the bank
+### Create bank
 
-Use [this endpoint](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv4_0_0-createBank&currentTag=Bank&api-collection-id=#OBPv4_0_0-createBank)
+Use Endpoint  [create Bank](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv4_0_0-createBank&currentTag=Bank&api-collection-id=#OBPv4_0_0-createBank)
 to create your bank.
 
 Needs role "CanCreateBank" on the sandbox.
 Will give you the role "CanCreateEntitlementAtOneBank" , so you can grant yourself all roles needed below [here](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv2_0_0-addEntitlement&currentTag=Role#OBPv2_0_0-addEntitlement)
 
 
-### If the customer does not exist, create the customer
+### Create customer
 
-Customer is the bank object representing the obp user at bank level. A user can have more than one customer object linked to.
-See linking customer to user below.
-As accounts belong to the (OBP) user in OBP, you do not necessarily need to create a customer if you are only uploading account related data.
-
-Customer is created [here](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv3_1_0-createCustomer&currentTag=Customer&api-collection-id=#OBPv3_1_0-createCustomer)
+Use Endpoint [Create Customer](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv3_1_0-createCustomer&currentTag=Customer&api-collection-id=#OBPv3_1_0-createCustomer)
 
 This call will create the customer_id needed for subsequent customer related apis.
 Needs role "CanCreateCustomer" for the bank (id), or "CanCreateCustomerAtAnyBank".
@@ -149,28 +172,18 @@ Needs role "CanCreateCustomer" for the bank (id), or "CanCreateCustomerAtAnyBank
 Create any bank specific customer attributes that you cannot map to obp generic attributes. [Here](https://apiexplorersandbox.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv4_0_0-createCustomerAttribute&currentTag=Customer&api-collection-id=#OBPv4_0_0-createCustomerAttribute)
 Needs role "CanCreateCustomerAttributeAtOneBank" for the bank.
 
-### If the user does not exist, create the user
-If there is no suitable (OBP) user created on the sandbox, create the user with [this endpoint](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv2_0_0-createUser&currentTag=User&api-collection-id=#OBPv2_0_0-createUser)
-This call will create the user_id needed for subsequent user related apis.
+### Accounts: If the product does not exist, create the Product
 
-### If the customer object is not linked to the user, create user customer link
-
-Link the user_id to the customer_id (created above) [here](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=#OBPv2_0_0-createUserCustomerLinks&currentTag=Customer&api-collection-id=#OBPv2_0_0-createUserCustomerLinks)
-
-Needs role "CanCreateUserCustomerLink" at bank level or "CanCreateUserCustomerLinkAtAnyBank".
-
-### Accounts: If the product does not exist, create the Product (optional)
-
-An account is of a certain product in obp ( like "Gold Card", "Generic Debit", "any_arbitrary_string"). As you can specify an empty string for product_code in account creation, you can skip this if you must for some reason.
+An account is of a certain product in obp ( like "Gold Card", "Generic Debit", "any_arbitrary_string"). If you want to add account attributes, which is what you want to do, you  need to name a product for account creation (next step)
 Create [here](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv3_1_0-createProduct&currentTag=Product&api-collection-id=#OBPv3_1_0-createProduct).
 
 Needs role: "CanCreateProduct" at bank level or "CanCreateProductAtAnyBank".
-### Accounts: Create Branch if not existing (optional)
-If your accounts belong to a specific bank branch, create it [here](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv3_0_0-createBranch&currentTag=Branch&api-collection-id=&bank_id=#OBPv3_0_0-createBranch)
+### Create Branch
+Use Endpoint [Create Branch](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv3_0_0-createBranch&currentTag=Branch&api-collection-id=&bank_id=#OBPv3_0_0-createBranch)
  
 Needs role "CanCreateBranch" at bank level or "CanCreateBranchAtAnyBank"
 ### Create the Account 
-Note that new created accounts must always  have an balance of zero.
+Note that new created accounts must always  have an balance of zero. So we need to make a initial transaction to/from the account to 
 create [here](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv4_0_0-addAccount&currentTag=Account&api-collection-id=&bank_id=&account_id=&view_id=&counterparty_id=&transaction_id=#OBPv4_0_0-addAccount)
 
 Needs role "CanCreateAccount" at bank level.
