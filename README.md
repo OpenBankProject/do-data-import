@@ -125,8 +125,16 @@ curl --location --request GET 'https://ifcsandbox.openbankproject.com//obp/dynam
 
 ### Get Customer Overview
 
-Use the endpoint [Get Customer Overview](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv5_0_0-getCustomerOverview&currentTag=Customer#OBPv5_0_0-getCustomerOverview) to get all relavent information of a customer by their Customer Number.
+Use the endpoint [Get Customer Overview Flat](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv5_0_0-getCustomerOverviewFlat&currentTag=Customer#OBPv5_0_0-getCustomerOverviewFlat) to get all relavent information of a customer by their Customer Number.
 
+Example:
+```
+curl --location --request POST 'https://ifcsandbox.openbankproject.com//obp/v5.0.0/banks/ADOPEM/customers/customer-number-query/overview-flat' \
+--header 'Authorization: DirectLogin token=$YOUR_DIRECT_LOGIN_TOKEN' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "customer_number": "4578102"
+```
 ## Endpoints for uploading the data
 
 
