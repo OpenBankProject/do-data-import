@@ -1,0 +1,8 @@
+from obp_python.getGlobalAuthorityDataRequests import getGlobalAuthorityDataRequests
+from obp_python.deleteGlobalAuthorityDataRequest import deleteGlobalAuthorityDataRequest
+
+
+global_authority_data_requests = getGlobalAuthorityDataRequests().json()["authority_data_request_list"]
+
+for request in global_authority_data_requests:
+	deleteGlobalAuthorityDataRequest(request["authority_data_request_id"])

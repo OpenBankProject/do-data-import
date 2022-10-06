@@ -119,32 +119,15 @@ curl --location --request GET 'https://ifcsandbox.openbankproject.com/obp/v3.0.0
 ### Get Authority Data Requests
 Example:
 ```
-curl --location --request GET 'https://ifcsandbox.openbankproject.com/obp/dynamic-entity/authority_data_request?bank_code=POPULAR' \
---header 'Authorization: DirectLogin token=$YOUR_DIRECT_LOGIN_TOKEN' \
---header 'Content-Type: application/json' 
+curl --location --request GET 'https://ifcsandbox.openbankproject.com//obp/dynamic-entity/banks/POPULAR/authority_data_request' \
+--header 'Authorization: DirectLogin token=$YOUR_DIRECT_LOGIN_TOKEN' 
 ```
 
 ### Get Customer Overview
 
 Use the endpoint [Get Customer Overview](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv5_0_0-getCustomerOverview&currentTag=Customer#OBPv5_0_0-getCustomerOverview) to get all relavent information of a customer by their Customer Number.
 
-### Get Banks
-Use Endpoint [Get Bank](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv4_0_0-getBank&currentTag=Bank#OBPv4_0_0-getBank)
-
-### Get Customers
-
-Use Endpoint [Get Customers at Bank](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv5_0_0-getCustomersAtOneBank&currentTag=Customer#OBPv5_0_0-getCustomersAtOneBank)
-
-### Get Accounts with Product attributes (Productos)
-
-Use Endpoint [Get Fast Firehose Accounts at Bank](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv4_0_0-getFastFirehoseAccountsAtOneBank&currentTag=Account#OBPv4_0_0-getFastFirehoseAccountsAtOneBank)
-### Get Branches
-
-Use Endpoint [Get Branches for a Bank](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv3_0_0-getBranches&currentTag=Branch#OBPv3_0_0-getBranches)
-
-### Get Authority Data requests
-
-Use Endpoint [Get Authority Data Requests List](https://ifcsandbox-explorer.openbankproject.com/)
+Use Endpoint [Get Authority Data Requests List](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv4_0_0-dynamicEntity_getauthority_data_requestList_ADOPEM&currentTag=_Authority%20Data%20Request(ADOPEM)#OBPv4_0_0-dynamicEntity_getauthority_data_requestList_ADOPEM)
 ## Endpoints for uploading the data
 
 
