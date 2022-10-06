@@ -1,5 +1,5 @@
 from obp_python.getFirehoseAccountsForBank import getFirehoseAccountsforBank
-from obp_python.getFirehoseCustomersForBank import getFirehoseCustomersforBank
+from obp_python.getCustomersForBank import getCustomersForBank
 from obp_python.getBanks import getBanks
 from obp_python.getBranches import getBranches
 from obp_python.getAuthorityDataRequestsForBank import getAuthorityDataRequestsForBank
@@ -18,23 +18,11 @@ res = getBanks()
 print(res)
 
 # Check customers
-try:
-	all_customers = []
-	offset = 0
-	step_size = 50
-	result_nr = step_size
-	metrics_total = []
-	count = 0
 
-	while result_nr == step_size:
-		res = getFirehoseCustomersforBank(bank_id=bank_id, limit=str(step_size), offset=str(offset))
-		customers = res.json()["customers"]
-		for i in customers:
-			all_customers.append(i)
-		result_nr = len(customers)
-		offset = offset + step_size
-except Exception as e:
-	print(str(e))
+customers = getCustomersForBank(bank_id).json()["customers"]
+print("Customers: \n\n\n")
+print(customers)
+
 
 # Check Accounts
 offset = 0
@@ -51,14 +39,17 @@ while result_nr == step_size:
 	result_nr = len(accounts)
 	offset = offset + step_size
 
+print("Accounts: \n\n\n")
 print(all_accounts)
 
 # Check Branches
 
 res = getBranches(bank_id).json()["branches"]
+print("Branches: \n\n\n")
 print(res)
 
 # Check Authority Data Requests
 
 res = getAuthorityDataRequestsForBank(bank_id).json()['authority_data_request_list']
+print("Authority Data Requests: \n\n\n")
 print(res)
