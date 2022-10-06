@@ -127,7 +127,6 @@ curl --location --request GET 'https://ifcsandbox.openbankproject.com//obp/dynam
 
 Use the endpoint [Get Customer Overview](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv5_0_0-getCustomerOverview&currentTag=Customer#OBPv5_0_0-getCustomerOverview) to get all relavent information of a customer by their Customer Number.
 
-Use Endpoint [Get Authority Data Requests List](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv4_0_0-dynamicEntity_getauthority_data_requestList_ADOPEM&currentTag=_Authority%20Data%20Request(ADOPEM)#OBPv4_0_0-dynamicEntity_getauthority_data_requestList_ADOPEM)
 ## Endpoints for uploading the data
 
 
