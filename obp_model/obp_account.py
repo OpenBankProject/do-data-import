@@ -3,6 +3,7 @@ from obp_python.createAccountAttribute import createAccountAttribute
 from obp_python.config import settlement_accounts_bank,  settlement_account_sandbox
 from obp_python.createHistoricalTransaction import createHistoricalTransaction
 from obp_python.createSettlementAccount import create_settlement_account
+from obp_python.config import logger
 from random import randrange
 class OBPAccountBalance:
 	def __init__(
@@ -64,6 +65,7 @@ class OBPAccount:
 			self.accountroutings.address
 		)
 		balance_amount = float(self.balance.amount)
+		logger.debug(f"creating balance transaction for amount: {str(balance_amount)}")
 		if balance_amount != 0:
 			account_id = res.json()["account_id"]
 			if balance_amount < 0:
@@ -73,7 +75,7 @@ class OBPAccount:
 					to_bank_id=settlement_accounts_bank,
 					to_account_id=f'{settlement_account_sandbox}_{self.balance.currency}',
 					currency=self.balance.currency,
-					amount=str(self.balance.amount).replace('-', '')
+					amount=abs(balance_amount)
 					)
 			if balance_amount > 0:
 				createHistoricalTransaction(
@@ -82,7 +84,7 @@ class OBPAccount:
 					to_bank_id=self.bank_id,
 					to_account_id=account_id,
 					currency=self.balance.currency,
-					amount=self.balance.amount
+					amount=balance_amount
 				)
 
 

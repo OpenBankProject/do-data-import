@@ -58,7 +58,7 @@ def create_product_from_row(row):
 			product_instance_code=product_instance_code,
 			attribute_name='product_description',
 			attribute_type='STRING',
-			attribute_value=row[5].value
+			attribute_value=row[4].value
 		)
 		product_description.create_account_attribute()
 		issuance_amount = OBPAccountAttribute(

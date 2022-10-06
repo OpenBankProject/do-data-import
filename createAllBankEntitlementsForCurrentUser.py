@@ -15,4 +15,10 @@ def create_bank_entitlements_for_user(bank_id):
 		except:
 			print("did not work")
 
+def create_authority_data_request_roles(bank_id):
+	try:
+		user_id = getCurrentUser().json()["user_id"]
+		addRole('CanCreateDynamicEntity_authority_data_request', "", user_id)
+	except Exception as e:
+		print(f"could not create auth data request roles: {e}")
 

@@ -5,6 +5,7 @@ from .makeRequests import makePostRequest
 def create_authority_data_request_instance_at_bank(bank_id):
 
     payload = {
+        "bankId": bank_id,
         "authority_data_request": {
             "description": "Legal request to give customer data to the authorities",
             "required": [

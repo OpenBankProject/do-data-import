@@ -12,7 +12,7 @@ consumer_key = "customerkey"
 # defaults below should be fine, just change loglevel to Debug if needed
 obp_api_host = "https://ifcsandbox.openbankproject.com/"
 # change below to this if you need debugging: logging.basicConfig(level=logging.DEBUG)
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.ERROR)
 logger = logging.getLogger("obp_python")
 logger.propagate = True
 settlement_accounts_bank = "obp1"
