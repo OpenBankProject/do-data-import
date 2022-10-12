@@ -117,6 +117,10 @@ curl --location --request GET 'https://ifcsandbox.openbankproject.com/obp/v3.0.0
 ```
 
 ### Get Authority Data Requests
+Use the Endpoint [Get Authority Data Request List
+](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv4_0_0-dynamicEntity_getauthority_data_requestList_ADOPEM&currentTag=_Authority%20Data%20Request(ADOPEM)#OBPv4_0_0-dynamicEntity_getauthority_data_requestList_ADOPEM)
+
+Technically, each bank has its own endpoint, but those only differ in the BANK_ID.
 Example:
 ```
 curl --location --request GET 'https://ifcsandbox.openbankproject.com//obp/dynamic-entity/banks/POPULAR/authority_data_request' \

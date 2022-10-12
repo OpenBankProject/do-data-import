@@ -66,26 +66,29 @@ class OBPAccount:
 		)
 		balance_amount = float(self.balance.amount)
 		logger.debug(f"creating balance transaction for amount: {str(balance_amount)}")
-		if balance_amount != 0:
-			account_id = res.json()["account_id"]
-			if balance_amount < 0:
-				createHistoricalTransaction(
-					from_account_id=account_id,
-					from_bank_id=self.bank_id,
-					to_bank_id=settlement_accounts_bank,
-					to_account_id=f'{settlement_account_sandbox}_{self.balance.currency}',
-					currency=self.balance.currency,
-					amount=abs(balance_amount)
+		try:
+			if balance_amount != 0:
+				account_id = res.json()["account_id"]
+				if balance_amount < 0:
+					createHistoricalTransaction(
+						from_account_id=account_id,
+						from_bank_id=self.bank_id,
+						to_bank_id=settlement_accounts_bank,
+						to_account_id=f'{settlement_account_sandbox}_{self.balance.currency}',
+						currency=self.balance.currency,
+						amount=abs(balance_amount)
+						)
+				if balance_amount > 0:
+					createHistoricalTransaction(
+						from_account_id=f'{settlement_account_sandbox}_{self.balance.currency}',
+						from_bank_id=settlement_accounts_bank,
+						to_bank_id=self.bank_id,
+						to_account_id=account_id,
+						currency=self.balance.currency,
+						amount=balance_amount
 					)
-			if balance_amount > 0:
-				createHistoricalTransaction(
-					from_account_id=f'{settlement_account_sandbox}_{self.balance.currency}',
-					from_bank_id=settlement_accounts_bank,
-					to_bank_id=self.bank_id,
-					to_account_id=account_id,
-					currency=self.balance.currency,
-					amount=balance_amount
-				)
+		except Exception as e:
+			logger.exception(f'Could not create initial balance transaction: {e}')
 
 
 		return res
