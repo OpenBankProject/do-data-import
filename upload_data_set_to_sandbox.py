@@ -2,6 +2,7 @@ from openpyxl import load_workbook
 from os import getcwd
 from obp_python.config import logger
 from obp_python.createAuthorityDataRequestInstanceAtBank import create_authority_data_request_instance_at_bank
+from obp_model.obp_account import create_settlement_accounts
 from  obp_model.constants import BANK_TYPE, BANK_CODE
 from sb.bank import create_bank_from_row, create_bank_attribute_from_row
 from sb.customer import create_customer_from_row
@@ -9,7 +10,7 @@ from sb.account import create_account_from_row
 from sb.product import create_product_from_row
 from sb.branch import create_branch_from_row
 from sb.authority_data_request import create_authority_data_request_from_row
-from createAllBankEntitlementsForCurrentUser import create_bank_entitlements_for_user
+from createAllBankEntitlementsForCurrentUser import create_bank_entitlements_for_user, create_authority_data_request_roles
 
 date_format = '%Y-%m-%d'
 data_source = f'{getcwd()}/resources/sb_import.xlsx'
@@ -41,9 +42,10 @@ def upload_data(data_source):
 		logger.debug(f'This is the bank_id: {bank_id}')
 		create_bank_from_row(row)
 		create_bank_entitlements_for_user(bank_id)
+		create_settlement_accounts(bank_id)
 		create_bank_attribute_from_row(row)
 		create_authority_data_request_instance_at_bank(bank_id)
-		create_bank_entitlements_for_user(bank_id)
+		create_authority_data_request_roles(bank_id)
 
 
 
