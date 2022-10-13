@@ -117,8 +117,7 @@ curl --location --request GET 'https://ifcsandbox.openbankproject.com/obp/v3.0.0
 ```
 
 ### Get Authority Data Requests
-Use the Endpoint [Get Authority Data Request List
-](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv4_0_0-dynamicEntity_getauthority_data_requestList_ADOPEM&currentTag=_Authority%20Data%20Request(ADOPEM)#OBPv4_0_0-dynamicEntity_getauthority_data_requestList_ADOPEM)
+Use the Endpoint [Get Authority Data Request List](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv5.0.0&operation_id=OBPv4_0_0-dynamicEntity_getauthority_data_requestList_ADOPEM&currentTag=_Authority%20Data%20Request(ADOPEM)#OBPv4_0_0-dynamicEntity_getauthority_data_requestList_ADOPEM)
 
 Technically, each bank has its own endpoint, but those only differ in the BANK_ID.
 Example:
@@ -158,33 +157,162 @@ Will give you the role "CanCreateEntitlementAtOneBank" , so you can grant yourse
 ### Create customer
 
 Use Endpoint [Create Customer](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv3_1_0-createCustomer&currentTag=Customer&api-collection-id=#OBPv3_1_0-createCustomer)
+The OBP modell demands information that you do not have. So for creation, there is the need to add some default values.
+Those could be hidden in the responses by query parameter, though.
 
+Example of minimal working create Customer:
+
+```
+curl --location --request POST 'https://ifcsandbox.openbankproject.com//obp/v5.0.0/banks/APAP/customers' \
+--header 'Authorization: DirectLogin token=YOUR_TOKEN' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "legal_name": "Herbert Muller",
+    "mobile_phone_number": "",
+    "email": "",
+    "face_image": {
+        "url": "",
+        "date": "1100-01-01T00:00:00Z"
+    },
+    "date_of_birth": "1100-01-01T00:00:00Z",
+    "relationship_status": "",
+    "dependants": 0,
+    "dob_of_dependants": [
+    ],
+    "credit_rating": {
+        "rating": "",
+        "source": ""
+    },
+    "credit_limit": {
+        "currency": "",
+        "amount": ""
+    },
+    "highest_education_attained": "",
+    "employment_status": "",
+    "kyc_status": true,
+    "last_ok_date": "1100-01-01T00:00:00Z",
+    "title": "",
+    "branch_id": "",
+    "name_suffix": ""
+}'
+```
 This call will create the customer_id needed for subsequent customer related apis.
 Needs role "CanCreateCustomer" for the bank (id), or "CanCreateCustomerAtAnyBank".
 
 
 Create any bank specific customer attributes that you cannot map to obp generic attributes. [Here](https://apiexplorersandbox.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv4_0_0-createCustomerAttribute&currentTag=Customer&api-collection-id=#OBPv4_0_0-createCustomerAttribute)
 Needs role "CanCreateCustomerAttributeAtOneBank" for the bank.
+### Update customer number
 
+Use Endpoint [Update the number of a Customer](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv3_1_0-updateCustomerNumber&currentTag=Customer&api-collection-id=#OBPv3_1_0-updateCustomerNumber) to change the automatically created Customernumber to the real value
+
+Example: 
+```
+curl --location --request PUT 'https://ifcsandbox.openbankproject.com//obp/v5.0.0/banks/APAP/customers/7uy8a7e4-6d02-40e3-a129-0b2bf89de8uh/number' \
+--header 'Authorization: DirectLogin token=$YOUR_TOKEN' \
+--header 'Content-Type: application/json' 
+--data-raw '{
+    "customer_number": "5987953"
+}'
+```
 ### Accounts: If the product does not exist, create the Product
 
 An account is of a certain product in obp ( like "Gold Card", "Generic Debit", "any_arbitrary_string"). If you want to add account attributes, which is what you want to do, you  need to name a product for account creation (next step)
 Create [here](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv3_1_0-createProduct&currentTag=Product&api-collection-id=#OBPv3_1_0-createProduct).
 
 Needs role: "CanCreateProduct" at bank level or "CanCreateProductAtAnyBank".
-### Create Branch
-Use Endpoint [Create Branch](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv3_0_0-createBranch&currentTag=Branch&api-collection-id=&bank_id=#OBPv3_0_0-createBranch)
- 
-Needs role "CanCreateBranch" at bank level or "CanCreateBranchAtAnyBank"
 ### Create the Account 
-Note that new created accounts must always  have an balance of zero. So we need to make a initial transaction to/from the account to 
+Note that new created accounts must always  have an balance of zero. So we need to make a initial transaction to/from the account to a settlement account 
 create [here](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv4_0_0-addAccount&currentTag=Account&api-collection-id=&bank_id=&account_id=&view_id=&counterparty_id=&transaction_id=#OBPv4_0_0-addAccount)
 
+Example:
+```
+curl --location --request POST 'https://ifcsandbox.openbankproject.com/obp/v5.0.0/banks/APAP/accounts' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: DirectLogin token=$YOUR_TOKEN' \
+--data-raw '{
+    "user_id": "",
+    "label": "",
+    "product_code": "Basic",
+    "balance": {
+        "currency": "DOP",
+        "amount": "0"
+    },
+    "branch_id": "",
+    "account_routings": [
+        {
+            "scheme": "account_number",
+            "address": "799245353490933"
+        }
+    ]
+}'
+```
 Needs role "CanCreateAccount" at bank level.
 
 Create any bank specific account attributes that you cannot map to obp generic attributes. [Here](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv3_1_0-createAccountAttribute&currentTag=Account#OBPv3_1_0-createAccountAttribute)
 Needs role "CanCreateAccountAttributeAtOneBank" for the bank.
+### Create the settlement accounts
 
-### Deletion: Accounts
+To make the initial transfer to set the balance, you will need a settlement account on the bank where this transaction goes to/ comes from.
+You will need one settlement account per currency.
 
-The [deleteAccountCascade Endpoint](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv4_0_0-deleteAccountCascade&currentTag=Account#OBPv4_0_0-deleteAccountCascade) will delete an account object along  with all account attributes.
+Example:
+```
+curl --location --request POST 'https://ifcsandbox.openbankproject.com/obp/v5.0.0/banks/APAP/settlement-accounts' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: DirectLogin token=$YOUR_TOKEN' \
+
+--data-raw '{
+    "user_id": "",
+    "payment_system": "SANDBOX-TAN",
+    "balance": {
+        "currency": "DOP",
+        "amount": "0"
+    },
+    "label": "",
+    "branch_id": "",
+    "account_routings": [
+        {
+            "scheme": "settlement",
+            "address": "12345678"
+        }
+    ]
+}'
+```
+
+### Create the balance
+Use Endpoint [Create Historical Transactions](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv4_0_0-createHistoricalTransactionAtBank&currentTag=Transaction-Request#OBPv4_0_0-createHistoricalTransactionAtBank)
+to create a transaction from (positive balance) or from (negative balance) the settlement account.
+Settlement account_id will be: SANDBOX-TAN_SETTLEMENT_ACCOUNT_$CURRENCY <- replace $CURRENCY with the currency.
+
+E.g. : SANDBOX-TAN_SETTLEMENT_ACCOUNT_DOP
+
+Example:
+```
+curl --location --request POST 'https://ifcsandbox.openbankproject.com/obp/v5.0.0/banks/ADOPEM/management/historical/transactions' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: DirectLogin token=$YOUR_TOKEN' \
+--data-raw '{
+    "from_account_id": "SANDBOX-TAN_SETTLEMENT_ACCOUNT_DOP",
+    "to_account_id": "6153fd73-c5c8-449f-8f2c-a360f4ee2f9f",
+    "value": {
+        "currency": "DOP",
+        "amount": "2230"
+    },
+    "description": "this is for work",
+    "posted": "1100-01-01T01:01:01Z",
+    "completed": "1100-01-01T01:01:01Z",
+    "type": "SANDBOX_TAN",
+    "charge_policy": "SHARED"
+```
+
+### Create Branch
+Use Endpoint [Create Branch](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv3_0_0-createBranch&currentTag=Branch&api-collection-id=&bank_id=#OBPv3_0_0-createBranch)
+Needs role "CanCreateBranch" at bank level or "CanCreateBranchAtAnyBank"
+
+
+### Create Authority Data Requests
+
+Use Endpoint [Create new Authority Data Request](https://ifcsandbox-explorer.openbankproject.com/?version=OBPv4.0.0&operation_id=OBPv4_0_0-dynamicEntity_createauthority_data_request_ADOPEM&currentTag=_Authority%20Data%20Request(ADOPEM)#OBPv4_0_0-dynamicEntity_createauthority_data_request_ADOPEM)
+
+Technically, each bank has its own endpoint, but those only differ in the BANK_ID.
